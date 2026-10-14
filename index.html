@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ovrilo for Windows</title>
+    <meta name="description" content="Ovrilo is a small voice chat app for Windows, made for the people you play games with." />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --night: #0d1420;
+        --ridge: #172131;
+        --mist: #aeb9c8;
+        --snow: #f3f5f8;
+        --dusk: #f2a086;
+        --signal: #2f86ff;
+        --line: #26334a;
+        --font: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+      }
+
+      * { box-sizing: border-box; }
+      html { background: var(--night); }
+      body {
+        margin: 0;
+        color: var(--snow);
+        font: 400 17px/1.6 var(--font);
+        font-optical-sizing: auto;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: inherit; }
+      :focus-visible { outline: 2px solid var(--dusk); outline-offset: 3px; }
+
+      .page { width: min(1120px, 100% - 40px); margin: 0 auto; }
+
+      .top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 0;
+      }
+      .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 19px; text-decoration: none; }
+      .brand img { width: 30px; height: 30px; }
+      .top a.quiet { color: var(--mist); font-size: 15px; }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+        gap: 56px;
+        align-items: end;
+        padding: 40px 0 72px;
+      }
+      h1 {
+        margin: 0;
+        max-width: 11ch;
+        font-size: clamp(2.7rem, 6.2vw, 5rem);
+        font-weight: 800;
+        line-height: 0.98;
+        letter-spacing: -0.035em;
+        font-variation-settings: "opsz" 96;
+      }
+      .lede { max-width: 34em; margin: 28px 0 0; color: var(--mist); font-size: 19px; }
+      .get { margin-top: 36px; }
+      .download {
+        display: inline-block;
+        padding: 16px 30px;
+        border-radius: 999px;
+        background: var(--signal);
+        color: var(--snow);
+        font-weight: 600;
+        font-size: 18px;
+        text-decoration: none;
+        transition: background 160ms ease;
+      }
+      .download:hover { background: #4b97ff; }
+      .download[aria-disabled="true"] { background: var(--ridge); color: var(--mist); pointer-events: none; }
+      .version { margin: 14px 0 0; color: var(--mist); font-size: 15px; }
+      .warning {
+        max-width: 32em;
+        margin: 28px 0 0;
+        padding-left: 14px;
+        border-left: 2px solid var(--dusk);
+        color: var(--mist);
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      /* The illustration is cropped tall, around the lit peak, so it reads as a window rather than a banner. */
+      .scene {
+        margin: 0;
+        aspect-ratio: 4 / 5;
+        border-radius: 4px 4px 160px 4px;
+        background: var(--ridge) url("assets/background.webp") 38% 30% / cover no-repeat;
+      }
+
+      .changes {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 56px;
+        padding: 64px 0 96px;
+        border-top: 1px solid var(--line);
+      }
+      .changes h2 {
+        position: sticky;
+        top: 24px;
+        align-self: start;
+        margin: 0;
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+      }
+      .changes h2 small { display: block; margin-top: 8px; color: var(--mist); font-size: 15px; font-weight: 400; letter-spacing: 0; }
+
+      /* Versions are a real sequence, so a timeline rail is information, not decoration. */
+      .timeline { margin: 0; padding: 0; list-style: none; }
+      .release { position: relative; padding: 0 0 56px 36px; border-left: 1px solid var(--line); }
+      .release:last-child { padding-bottom: 0; border-left-color: transparent; }
+      .release::before {
+        content: "";
+        position: absolute;
+        left: -6px;
+        top: 12px;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--night);
+        border: 2px solid var(--dusk);
+      }
+      .release:first-child::before { background: var(--dusk); }
+      .release header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; }
+      .release h3 { margin: 0; color: var(--dusk); font-size: 34px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+      .release time, .release .tag { color: var(--mist); font-size: 15px; }
+      .release .tag { padding: 1px 10px; border: 1px solid var(--line); border-radius: 999px; }
+      .release header a { margin-left: auto; color: var(--mist); font-size: 15px; }
+      .notes { max-width: 40em; margin-top: 14px; }
+      .notes p { margin: 0 0 12px; }
+      .notes h4 { margin: 22px 0 6px; font-size: 16px; font-weight: 600; color: var(--snow); }
+      .notes ul { margin: 0; padding-left: 20px; color: var(--mist); }
+      .notes li { margin: 4px 0; }
+      .notes li::marker { color: var(--dusk); }
+      .empty { color: var(--mist); }
+
+      footer { padding: 28px 0 40px; border-top: 1px solid var(--line); color: var(--mist); font-size: 14px; }
+
+      @media (max-width: 820px) {
+        .hero { grid-template-columns: 1fr; gap: 40px; padding: 16px 0 56px; }
+        .scene { aspect-ratio: 16 / 10; border-radius: 4px 4px 96px 4px; order: -1; }
+        .changes { grid-template-columns: 1fr; gap: 28px; padding: 48px 0 64px; }
+        .changes h2 { position: static; }
+        .release header a { margin-left: 0; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * { transition: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="top">
+        <a class="brand" href="./"><img src="assets/logo.png" alt="" width="30" height="30" />Ovrilo</a>
+        <a class="quiet" href="https://github.com/Ovrilo/ovrilo-releases/releases">All releases on GitHub</a>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div>
+            <h1>Voice chat for the people you actually play with.</h1>
+            <p class="lede">
+              Ovrilo is a small voice app for Windows. Push to talk works while your game has focus, it sits quietly in
+              the tray, and it keeps the call going when you close the window.
+            </p>
+            <div class="get">
+              <a id="download" class="download" href="https://github.com/Ovrilo/ovrilo-releases/releases" aria-disabled="true">
+                Download for Windows
+              </a>
+              <p id="version" class="version">Checking for the latest version…</p>
+            </div>
+            <p class="warning">
+              Ovrilo is in early alpha and the installer isn't code-signed yet, so Windows will say the publisher is
+              unknown. Choose <strong>More info</strong>, then <strong>Run anyway</strong>. After that, Ovrilo installs
+              its own updates and checks each one's signature first.
+            </p>
+          </div>
+          <figure class="scene" role="img" aria-label="Snowy mountains at dusk above a forest and a lake"></figure>
+        </section>
+
+        <section class="changes" aria-labelledby="changes-title">
+          <h2 id="changes-title">What changed <small>Newest first</small></h2>
+          <ol id="timeline" class="timeline">
+            <li class="empty">Loading the changelog…</li>
+          </ol>
+        </section>
+      </main>
+
+      <footer>Windows 10 and 11, 64-bit.</footer>
+    </div>
+
+    <script>
+      // Public GitHub API, no token. Anonymous callers never see draft releases.
+      const repo = "Ovrilo/ovrilo-releases";
+      const download = document.getElementById("download");
+      const version = document.getElementById("version");
+      const timeline = document.getElementById("timeline");
+
+      const installerOf = (release) => release.assets.find((asset) => /_x64-setup\.exe$/.test(asset.name));
+      const longDate = (iso) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+
+      function element(tag, text, className) {
+        const node = document.createElement(tag);
+        if (text !== undefined) node.textContent = text;
+        if (className) node.className = className;
+        return node;
+      }
+
+      // Renders the small Markdown subset used in CHANGELOG.md: paragraphs, ### headings and "- " lists.
+      function renderNotes(markdown) {
+        const notes = element("div", undefined, "notes");
+        let list = null;
+        for (const raw of markdown.split(/\r?\n/)) {
+          const line = raw.trim();
+          if (!line) { list = null; continue; }
+          if (line.startsWith("### ")) { notes.append(element("h4", line.slice(4))); list = null; }
+          else if (line.startsWith("- ")) {
+            if (!list) { list = element("ul"); notes.append(list); }
+            list.append(element("li", line.slice(2)));
+          } else { notes.append(element("p", line)); list = null; }
+        }
+        return notes;
+      }
+
+      function showReleases(releases) {
+        const published = releases.filter((release) => !release.draft && installerOf(release));
+        const latest = published.find((release) => !release.prerelease);
+
+        if (latest) {
+          const asset = installerOf(latest);
+          download.href = asset.browser_download_url;
+          download.removeAttribute("aria-disabled");
+          const size = (asset.size / 1048576).toFixed(1);
+          version.textContent = `Version ${latest.tag_name.replace(/^v/, "")}, ${size} MB, released ${longDate(latest.published_at)}.`;
+        } else {
+          version.textContent = "The first version hasn't been published yet.";
+        }
+
+        if (published.length === 0) {
+          timeline.replaceChildren(element("li", "Nothing here yet. The changelog starts with the first release.", "empty"));
+          return;
+        }
+        timeline.replaceChildren(
+          ...published.map((release) => {
+            const item = element("li", undefined, "release");
+            const header = element("header");
+            header.append(element("h3", release.tag_name.replace(/^v/, "")));
+            const time = element("time", longDate(release.published_at));
+            time.dateTime = release.published_at;
+            header.append(time);
+            if (release.prerelease) header.append(element("span", "pre-release", "tag"));
+            const link = element("a", "Download this version");
+            link.href = installerOf(release).browser_download_url;
+            header.append(link);
+            item.append(header, renderNotes(release.body || ""));
+            return item;
+          }),
+        );
+      }
+
+      fetch(`https://api.github.com/repos/${repo}/releases?per_page=20`, { headers: { Accept: "application/vnd.github+json" } })
+        .then((response) => (response.ok ? response.json() : Promise.reject(new Error(String(response.status)))))
+        .then(showReleases)
+        .catch(() => {
+          // Rate-limited or offline: the GitHub releases page still has everything.
+          download.removeAttribute("aria-disabled");
+          version.textContent = "Couldn't reach GitHub just now. The button opens the releases page instead.";
+          timeline.replaceChildren(element("li", "The changelog couldn't be loaded. It's also on the GitHub releases page.", "empty"));
+        });
+    </script>
+  </body>
+</html>
