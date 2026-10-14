@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ovrilo for Windows</title>
-    <meta name="description" content="Ovrilo is a small voice chat app for Windows, made for the people you play games with." />
+    <meta name="description" content="Ovrilo is a small voice and text chat app for Windows, made for the people you play games with." />
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -98,6 +98,27 @@
         background: var(--ridge) url("assets/background.webp") 38% 30% / cover no-repeat;
       }
 
+      .tour {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 56px;
+        padding: 64px 0 80px;
+        border-top: 1px solid var(--line);
+      }
+      .tour h2 { margin: 0 0 16px; font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
+      .tour-text p { margin: 0 0 14px; color: var(--mist); font-size: 16px; }
+      .shot { margin: 0; }
+      /* A plain window edge: the screenshot is the subject, so nothing competes with it. */
+      .shot img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        box-shadow: 0 30px 80px -30px rgb(0 0 0 / 70%);
+      }
+      .shot figcaption { margin-top: 12px; color: var(--mist); font-size: 14px; }
+
       .changes {
         display: grid;
         grid-template-columns: 220px minmax(0, 1fr);
@@ -150,6 +171,7 @@
       @media (max-width: 820px) {
         .hero { grid-template-columns: 1fr; gap: 40px; padding: 16px 0 56px; }
         .scene { aspect-ratio: 16 / 10; border-radius: 4px 4px 96px 4px; order: -1; }
+        .tour { grid-template-columns: 1fr; gap: 24px; padding: 48px 0 56px; }
         .changes { grid-template-columns: 1fr; gap: 28px; padding: 48px 0 64px; }
         .changes h2 { position: static; }
         .release header a { margin-left: 0; }
@@ -172,8 +194,8 @@
           <div>
             <h1>Voice chat for the people you actually play with.</h1>
             <p class="lede">
-              Ovrilo is a small voice app for Windows. Push to talk works while your game has focus, it sits quietly in
-              the tray, and it keeps the call going when you close the window.
+              Ovrilo is a small voice and text chat app for Windows. Push to talk works while your game has focus, it
+              sits quietly in the tray, and it keeps the call going when you close the window.
             </p>
             <div class="get">
               <a id="download" class="download" href="https://github.com/Ovrilo/ovrilo-releases/releases" aria-disabled="true">
@@ -188,6 +210,24 @@
             </p>
           </div>
           <figure class="scene" role="img" aria-label="Snowy mountains at dusk above a forest and a lake"></figure>
+        </section>
+
+        <section class="tour" aria-labelledby="tour-title">
+          <div class="tour-text">
+            <h2 id="tour-title">Your crew, in one window</h2>
+            <p>Voice channels on the left, the conversation in the middle, and who is online on the right.</p>
+            <p>Channels with something new show how many messages are waiting, so you can catch up before the next match.</p>
+          </div>
+          <figure class="shot">
+            <img
+              src="assets/screenshot-chat.webp"
+              width="1440"
+              height="900"
+              loading="lazy"
+              alt="The Ovrilo window: a community called Night Owls with voice and text channels, a group chat about meeting for a game at nine, and a member list with three people online"
+            />
+            <figcaption>The people and messages in this picture are made up.</figcaption>
+          </figure>
         </section>
 
         <section class="changes" aria-labelledby="changes-title">
