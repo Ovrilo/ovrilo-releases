@@ -118,6 +118,39 @@
         box-shadow: 0 30px 80px -30px rgb(0 0 0 / 70%);
       }
       .shot figcaption { margin-top: 12px; color: var(--mist); font-size: 14px; }
+      .shot-note { margin: 12px 0 0; color: var(--mist); font-size: 14px; }
+      /* Two supporting views under the main one; they stack on narrow screens. */
+      .shot-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+
+      /* Plain information sections share the changelog's two-column rhythm. */
+      .info {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 56px;
+        padding: 64px 0 72px;
+        border-top: 1px solid var(--line);
+      }
+      .info h2 { margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
+      .info h2 small { display: block; margin-top: 8px; color: var(--mist); font-size: 15px; font-weight: 400; letter-spacing: 0; }
+      .info-body { max-width: 40em; }
+      .info-body > p { margin: 0 0 16px; color: var(--mist); }
+      .facts { margin: 0; padding: 0; list-style: none; }
+      .facts li { padding: 14px 0; border-bottom: 1px solid var(--line); }
+      .facts li:first-child { padding-top: 0; }
+      .facts strong { display: block; color: var(--snow); font-weight: 600; }
+      .facts span { color: var(--mist); }
+      .faq details { border-bottom: 1px solid var(--line); }
+      .faq summary {
+        padding: 16px 0;
+        cursor: pointer;
+        font-weight: 600;
+        list-style: none;
+      }
+      .faq summary::-webkit-details-marker { display: none; }
+      .faq summary::after { content: "+"; float: right; color: var(--dusk); font-weight: 400; }
+      .faq details[open] summary::after { content: "–"; }
+      .faq details p { margin: 0 0 18px; color: var(--mist); }
+      footer a { color: var(--snow); }
 
       .changes {
         display: grid;
@@ -172,7 +205,9 @@
         .hero { grid-template-columns: 1fr; gap: 40px; padding: 16px 0 56px; }
         .scene { aspect-ratio: 16 / 10; border-radius: 4px 4px 96px 4px; order: -1; }
         .tour { grid-template-columns: 1fr; gap: 24px; padding: 48px 0 56px; }
+        .shot-pair { grid-template-columns: 1fr; }
         .changes { grid-template-columns: 1fr; gap: 28px; padding: 48px 0 64px; }
+        .info { grid-template-columns: 1fr; gap: 24px; padding: 48px 0 56px; }
         .changes h2 { position: static; }
         .release header a { margin-left: 0; }
       }
@@ -224,10 +259,111 @@
               width="1440"
               height="900"
               loading="lazy"
-              alt="The Ovrilo window: a community called Night Owls with voice and text channels, a group chat about meeting for a game at nine, and a member list with three people online"
+              alt="The Ovrilo window: a community called Night Owls with voice and text channels and unread counts, its #general chat about meeting for a game at nine, and a member list with four people online"
             />
             <figcaption>The people and messages in this picture are made up.</figcaption>
           </figure>
+        </section>
+
+        <section class="tour" aria-labelledby="friends-title">
+          <div class="tour-text">
+            <h2 id="friends-title">Friends, outside any community</h2>
+            <p>Add people by their username and see who is online. Message them directly, or start a group chat for the ones you play with every weekend.</p>
+            <p>Press the phone to ring a friend or the whole group. Everyone answers on their own, and the call works like a voice channel, screen sharing included.</p>
+            <p>Inviting a friend to a community takes one click: they get it in your messages with a Join button.</p>
+          </div>
+          <div>
+            <figure class="shot">
+              <img
+                src="assets/screenshot-call.webp"
+                width="1440"
+                height="900"
+                loading="lazy"
+                alt="A group chat called Saturday squad with four members planning a Saturday game, while Jane Smith is calling the group"
+              />
+            </figure>
+            <div class="shot-pair">
+              <figure class="shot">
+                <img
+                  src="assets/screenshot-friends.webp"
+                  width="1440"
+                  height="900"
+                  loading="lazy"
+                  alt="The Friends page with three friends online and one pending friend request"
+                />
+              </figure>
+              <figure class="shot">
+                <img
+                  src="assets/screenshot-invite.webp"
+                  width="1440"
+                  height="900"
+                  loading="lazy"
+                  alt="A direct message from Maria Garcia with an invitation card to a community called Speedrun Club and a Join button"
+                />
+              </figure>
+            </div>
+            <p class="shot-note">The people and messages in these pictures are made up.</p>
+          </div>
+        </section>
+
+        <section class="info" aria-labelledby="next-title">
+          <h2 id="next-title">Coming next <small>Plans, not promises</small></h2>
+          <div class="info-body">
+            <ul class="facts">
+              <li><strong>Right-click anyone in a member list</strong><span>to add them as a friend, message them or block them.</span></li>
+              <li><strong>Notifications</strong><span>for new messages and calls while Ovrilo sits in the tray.</span></li>
+              <li><strong>End-to-end encryption</strong><span>so that only the people in a conversation can read it. It is being designed now.</span></li>
+              <li><strong>macOS and Linux</strong><span>later. Ovrilo is Windows-only for now.</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="info" aria-labelledby="privacy-title">
+          <h2 id="privacy-title">Privacy, plainly</h2>
+          <div class="info-body">
+            <ul class="facts">
+              <li><strong>What is stored</strong><span>Your account (username, display name, email and a hashed password), your communities, messages in channels, direct messages and group chats, and the pictures you upload.</span></li>
+              <li><strong>Calls are not recorded</strong><span>Voice and screen shares pass through the server to the others in the call and are not kept.</span></li>
+              <li><strong>Encrypted on the way, not end to end yet</strong><span>Everything travels over encrypted connections, but messages are stored readable on the server. End-to-end encryption is planned.</span></li>
+              <li><strong>Pictures stay private</strong><span>A community's pictures are shown only to its members.</span></li>
+              <li><strong>Your sign-in stays in Windows</strong><span>Ovrilo keeps it in Windows Credential Manager, not in a file.</span></li>
+              <li><strong>Deleting your account</strong><span>There is no button for it yet. <a href="https://github.com/Ovrilo/ovrilo-releases/issues">Ask us</a> and we remove your account and messages.</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="info faq" aria-labelledby="faq-title">
+          <h2 id="faq-title">Questions</h2>
+          <div class="info-body">
+            <details>
+              <summary>Why does Windows say the publisher is unknown?</summary>
+              <p>The installer isn't code-signed yet; a signing certificate costs money this project doesn't have. Choose More info, then Run anyway. Updates are different: Ovrilo checks each update's signature before installing it.</p>
+            </details>
+            <details>
+              <summary>Is Ovrilo free?</summary>
+              <p>Yes. It is a non-commercial project made for a group of friends, with no ads and nothing to pay for.</p>
+            </details>
+            <details>
+              <summary>What do I need?</summary>
+              <p>Windows 10 or 11 (64-bit) and a microphone. Headphones work best, though echo cancellation copes with speakers. Ovrilo uses Microsoft WebView2, which comes with Windows 11; if it is missing, the installer downloads it.</p>
+            </details>
+            <details>
+              <summary>How do updates arrive?</summary>
+              <p>Ovrilo looks for a new version when it starts and every few hours after that, and offers to install it. Closing the window keeps Ovrilo running in the tray, so to start fresh, right-click the tray icon and choose Quit, then open Ovrilo again.</p>
+            </details>
+            <details>
+              <summary>Why is Ovrilo still running after I close the window?</summary>
+              <p>So a call keeps going and friends can still reach you. Right-click the tray icon and choose Quit to close it completely.</p>
+            </details>
+            <details>
+              <summary>How do I uninstall it?</summary>
+              <p>Open Windows Settings, then Apps, then Installed apps, find Ovrilo and choose Uninstall.</p>
+            </details>
+            <details>
+              <summary>Where do I report a bug or suggest something?</summary>
+              <p>Open an issue on <a href="https://github.com/Ovrilo/ovrilo-releases/issues">GitHub</a>. Saying what you did, what you expected and what happened helps a lot.</p>
+            </details>
+          </div>
         </section>
 
         <section class="changes" aria-labelledby="changes-title">
@@ -238,7 +374,7 @@
         </section>
       </main>
 
-      <footer>Windows 10 and 11, 64-bit.</footer>
+      <footer>Windows 10 and 11, 64-bit. Found a bug? <a href="https://github.com/Ovrilo/ovrilo-releases/issues">Tell us on GitHub</a>.</footer>
     </div>
 
     <script>
