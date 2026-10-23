@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Ovrilo invitation</title>
+    <meta name="description" content="Someone invited you to a community on Ovrilo." />
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --night: #0d1420;
+        --ridge: #172131;
+        --mist: #aeb9c8;
+        --snow: #f3f5f8;
+        --dusk: #f2a086;
+        --signal: #2f86ff;
+        --line: #26334a;
+        --font: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+      }
+      * { box-sizing: border-box; }
+      html { background: var(--night); }
+      body {
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 24px 16px;
+        color: var(--snow);
+        font: 400 17px/1.6 var(--font);
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: inherit; }
+      :focus-visible { outline: 2px solid var(--dusk); outline-offset: 3px; }
+      main { width: min(460px, 100%); }
+      .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 40px; font-weight: 600; font-size: 19px; text-decoration: none; }
+      .brand img { width: 30px; height: 30px; }
+      h1 { margin: 0 0 12px; font-size: 40px; font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; }
+      p { margin: 0 0 16px; color: var(--mist); }
+      .open {
+        display: inline-block;
+        margin: 12px 0 28px;
+        padding: 16px 30px;
+        border-radius: 999px;
+        background: var(--signal);
+        color: var(--snow);
+        font-weight: 600;
+        font-size: 18px;
+        text-decoration: none;
+      }
+      .open:hover { background: #4b97ff; }
+      .steps { margin: 0 0 24px; padding: 20px 0 0; border-top: 1px solid var(--line); list-style: none; color: var(--mist); font-size: 15px; }
+      .steps li { margin-bottom: 10px; }
+      code {
+        padding: 2px 8px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--ridge);
+        color: var(--snow);
+        font-size: 15px;
+        letter-spacing: 0.06em;
+        user-select: all;
+      }
+      .invalid h1 { font-size: 32px; }
+    </style>
+  </head>
+  <body>
+    <main id="page">
+      <a class="brand" href="./"><img src="assets/logo.png" alt="" width="30" height="30" />Ovrilo</a>
+      <h1>You're invited to a community on Ovrilo.</h1>
+      <p>Ovrilo opens and shows you the community before you join.</p>
+      <a id="open" class="open" href="./">Open in Ovrilo</a>
+      <ul class="steps">
+        <li>Nothing happened? <a href="./">Download Ovrilo for Windows</a>, install it, then come back to this link.</li>
+        <li id="code-step" hidden>Or choose <strong>Join with an invitation</strong> in Ovrilo and paste this code: <code id="code"></code></li>
+      </ul>
+    </main>
+    <script>
+      // The code is after #, so it never reaches a server. It works once, until it expires.
+      const code = decodeURIComponent(location.hash.slice(1));
+      if (/^[A-Za-z0-9]{12}$/.test(code)) {
+        const app = `ovrilo://invite/${code}`;
+        document.getElementById("open").href = app;
+        document.getElementById("code").textContent = code;
+        document.getElementById("code-step").hidden = false;
+        location.href = app;
+      } else {
+        const page = document.getElementById("page");
+        page.classList.add("invalid");
+        page.querySelector("h1").textContent = "This invitation link is incomplete.";
+        page.querySelector("p").textContent = "Ask for a new link, or download Ovrilo and join with a code.";
+        const open = document.getElementById("open");
+        open.textContent = "Download Ovrilo";
+      }
+    </script>
+  </body>
+</html>
